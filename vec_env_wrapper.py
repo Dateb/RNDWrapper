@@ -27,16 +27,12 @@ class RNDVecEnvWrapper(VecEnvWrapper):
         self.rnd.int_rms.update(intrinsic)
         intrinsic_norm = intrinsic / np.sqrt(self.rnd.int_rms.var + 1e-8)
 
-        # update predictor
-        loss = self.rnd.update(norm_obs)
-
         total_rewards = rewards + self.beta * intrinsic_norm
 
         # logging
         for i, info in enumerate(infos):
             info["intrinsic_reward"] = intrinsic[i]
             info["extrinsic_reward"] = rewards[i]
-            info["rnd_loss"] = loss
-            info['total_reward'] = total_rewards[i]
+            info["total_reward"] = total_rewards[i]
 
         return obs, total_rewards, dones, infos
