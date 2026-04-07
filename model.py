@@ -23,7 +23,8 @@ class RNDModel:
         self.int_rms = RunningMeanStd(shape=())
 
     def normalize_obs(self, obs):
-        return (obs - self.obs_rms.mean) / np.sqrt(self.obs_rms.var + 1e-8)
+        normalized = (obs - self.obs_rms.mean) / np.sqrt(self.obs_rms.var + 1e-8)
+        return np.clip(normalized, -5, 5)
 
     def compute_intrinsic(self, obs):
         obs_t = torch.tensor(obs, dtype=torch.float32, device=self.device)

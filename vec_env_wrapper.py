@@ -21,7 +21,6 @@ class RNDVecEnvWrapper(VecEnvWrapper):
 
         norm_obs = self.rnd.normalize_obs(obs)
 
-        # intrinsic reward (non-episodic!)
         intrinsic = self.rnd.compute_intrinsic(norm_obs)
 
         # normalize intrinsic reward
